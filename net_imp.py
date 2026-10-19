@@ -3,22 +3,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.utils.prune as prune
-from attention import (SEAttention2D,
-                        ECAAttention2D,
-                        BandBranchAttention,
-                        SpectralStatChannelAttention,
-                        SpectralStatChannelAttentionv2,
-                        TABRA,
-                        TECAAttention2D,
-                        TECAAttention2Dv2,
-                        TECAAttention2Dv3,
-                        TRECAAttention2D)
 
 
-#  260420 baseline model == best model
-# =========================
-# Non-attention pooling
-# =========================
 class StatsPool2D(nn.Module):
     """
     Input: x shape [B, C, 1, T]
@@ -54,9 +40,6 @@ class StatsPool2D(nn.Module):
         return torch.cat([mean, std], dim=1)  # (B, 2C)
 
 
-# =========================
-# Original non-attention modules
-# =========================
 class TemporalDSBlock2D(nn.Module):
     def __init__(self, in_ch, out_ch, kernel_size=9, dilation=1, dropout=0.3, gn_groups=4):
         super().__init__()
@@ -89,7 +72,7 @@ class TemporalDSBlock2D(nn.Module):
         out = self.drop(out)
         return out + identity
 
-class FDNetCNN_CrossSubject(nn.Module):
+class MSStatsNet_CrossSubject(nn.Module):
     def __init__(
         self,
         classes=2,
@@ -151,54 +134,8 @@ class FDNetCNN_CrossSubject(nn.Module):
             nn.AvgPool2d((1, 2))
         )
 
-        # self.spec_attn = SpectralStatChannelAttention(
-        #     channels=stem_channels,
-        #     fs=fs,
-        #     reduction=8,
-        #     bands=((4, 8), (8, 13), (13, 30)),
-        #     use_time_stats=True
-        # )
-        # self.spec_attnv2 = SpectralStatChannelAttentionv2(
-        #     channels=stem_channels,
-        #     fs=fs,
-        #     reduction=8,
-        #     bands=((4, 8), (8, 13), (13, 30)),
-        #     use_time_stats=True,
-        #     use_relative_power=True,
-        #     use_band_ratio=True,
-        #     use_log_power=True,
-        #     norm_desc=True,
-        #     gate_scale=0.5
-        # )
-        # self.tab_attn = TABRA(
-        #     channels=stem_channels,
-        #     fs=fs,
-        #     reduction=8,
-        #     bands=((4, 8), (8, 13), (13, 30)),
-        #     use_time_stats=True,
-        #     use_log_ratio=True,
-        #     norm_desc=True,
-        #     residual_gate=True,
-        #     gate_scale=0.5
-        # )
-
-        # self.branch_attn = BandBranchAttention(
-        #     branch_channels=branch_channels,
-        #     num_branches=3
-        # )
-
         fusion_ch = branch_channels * len(active_branches)
 
-
-        # self.se = SEAttention2D(fusion_ch, reduction=8)
-        # self.eac = TECAAttention2D(fusion_ch, k_size=3)
-        # self.eac = TECAAttention2Dv3(fusion_ch, k_size=3)
-        # self.eca = TRECAAttention2D(channels=30, c_k=3, t_k=5)
-        # self.attn = nn.Identity()
-
-        # self.block1 = TemporalDSBlock2D(
-        #     fusion_ch, fusion_ch, kernel_size=9, dilation=1, dropout=dropout
-        # )
         if use_temporal_block:
             self.block2 = TemporalDSBlock2D(
                 fusion_ch, fusion_ch, kernel_size=9, dilation=2, dropout=dropout
