@@ -1,5 +1,4 @@
-# Source code of MS-StatsNet.
-# EEG Cross-Subject Classification
+# MS-StatsNet: Driver Drowsiness EEG Cross-Subject Classification
 
 A PyTorch implementation of a driver drowsiness EEG detection model evaluated using Leave-One-Subject-Out (LOSO) cross-subject validation.
 
