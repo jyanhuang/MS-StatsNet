@@ -1,1 +1,1 @@
-Source code of LiNet-EEG.
+Source code of MS-StatsNet.
