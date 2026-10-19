@@ -20,10 +20,8 @@ torch.cuda.empty_cache()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-# =======================
-# Path & Logger
-# =======================
-SAVE_DIR = "0915checkpoints"  # "0914checkpoints_ablation/model_prune"
+
+SAVE_DIR = "checkpoints" 
 os.makedirs(SAVE_DIR, exist_ok=True)
 LOG_PATH = os.path.join(SAVE_DIR, "loso_results.txt")
 
@@ -35,31 +33,16 @@ def log_print(msg, log_file=None):
         log_file.flush()
 
 
-# =======================
-# Normalize
-# =======================
-# def datanorm(x):
-#     """
-#     per-sample z-score
-#     x: (N, 1, 30, 384)
-#     """
-#     x = x.copy().astype(np.float32)
-#     mean = np.mean(x, axis=(2, 3), keepdims=True)
-#     std = np.std(x, axis=(2, 3), keepdims=True)
-#     x = (x - mean) / (std + 1e-8)
-#     return x
 
 def datanorm(x):
     x = x.copy().astype(np.float32)
-    mean = np.mean(x, axis=3, keepdims=True)   # 每个通道沿时间维求均值
-    std = np.std(x, axis=3, keepdims=True)     # 每个通道沿时间维求标准差
+    mean = np.mean(x, axis=3, keepdims=True)  
+    std = np.std(x, axis=3, keepdims=True)     
     x = (x - mean) / (std + 1e-8)
     return x
 
 
-# =======================
-# Metrics & Eval
-# =======================
+# Metrics
 def compute_metrics(y_true, y_pred):
     y_true = np.asarray(y_true)
     y_pred = np.asarray(y_pred)
@@ -163,10 +146,7 @@ def timed_inference_per_sample(net, X_test, warmup=20, repeat=50):
     latency_ms = (t1 - t0) * 1000.0 / repeat
     return float(latency_ms)
 
-
-# =======================
 # FLOPs / Params
-# =======================
 def count_parameters(model):
     return int(sum(p.numel() for p in model.parameters() if p.requires_grad))
 
@@ -219,9 +199,8 @@ def estimate_flops(model, input_size=(1, 1, 30, 384), device=DEVICE):
     return float(mflops)
 
 
-# =======================
+
 # Train Utils
-# =======================
 def make_class_weights(y_np):
     y_np = np.asarray(y_np).astype(np.int64)
     counts = np.bincount(y_np, minlength=2).astype(np.float32)
@@ -251,9 +230,7 @@ def split_train_val_by_subject(Xtr, ytr, Str, seed=42, strategy="random"):
     return Xtr[tr_mask], ytr[tr_mask], Xtr[val_mask], ytr[val_mask], int(val_sub)
 
 
-# =======================
 # Train one LOSO fold
-# =======================
 def train_one_fold(
     X_train_np,
     y_train_np,
@@ -378,11 +355,7 @@ def train_one_fold(
     return net, test_metrics, mflops, latency_ms, total_params, extra_info
 
 
-# =======================
 # Main: LOSO
-# =======================
-# def run():
-#     with open(LOG_PATH, "w", encoding="utf-8") as log_file:
 def run():
     with open(LOG_PATH, "a", encoding="utf-8") as log_file:
         log_print("\n" + "=" * 70, log_file)
