@@ -6,7 +6,7 @@ A PyTorch implementation of a driver drowsiness EEG detection model evaluated us
 
 ```text
 .
-├── EdgeDployment/       # Deployment on Raspberry Pi Model 4B
+├── EdgeDployment/       # Raspberry Pi deployment files
 ├── main_imp.py          # Training, validation, and evaluation
 ├── net_imp.py           # Neural network architecture
 ├── requirements.txt     # Python dependencies
