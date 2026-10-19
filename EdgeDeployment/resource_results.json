@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-09-16T08:55:15.067665+00:00",
+  "model": "D:\\Documents\\PythonProjects\\20260420EEG\\260915Deployment\\Ours\\best_model.onnx",
+  "data": "D:\\Documents\\PythonProjects\\20260420EEG\\260915Deployment\\subject_06.mat",
+  "samples": 166,
+  "precision": "FP32",
+  "batch_size": 1,
+  "threads": 1,
+  "warmup_runs": 50,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.10.0",
+  "latency": {
+    "inferences": 3320,
+    "mean_ms": 0.18842584337349397,
+    "std_ms": 0.03907264127206488,
+    "median_ms": 0.1763,
+    "p95_ms": 0.2423349999999998,
+    "min_ms": 0.169,
+    "max_ms": 0.8952,
+    "wall_time_s": 0.6268311,
+    "throughput_samples_s": 5296.482577204609
+  }
+}

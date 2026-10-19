@@ -1,0 +1,100 @@
+{
+  "timestamp_utc": "2026-09-25T13:01:45.501342+00:00",
+  "model": "D:\\Documents\\PythonProjects\\20260420EEG\\260915Deployment\\Ours\\best_model.onnx",
+  "data": "D:\\Documents\\PythonProjects\\20260420EEG\\260915Deployment\\subject_06.mat",
+  "raw_windows_in_ram": 166,
+  "sample_rate_hz": 128,
+  "channels": 30,
+  "buffer_samples": 384,
+  "window_seconds": 3.0,
+  "precision": "FP32",
+  "batch_size": 1,
+  "threads": 1,
+  "threshold": 0.54,
+  "warmup_windows": 20,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.10.0",
+  "latency": {
+    "windows": 10,
+    "realtime_pacing": true,
+    "nominal_sample_rate_hz": 128,
+    "nominal_window_s": 3.0,
+    "wall_time_s": 29.9859534,
+    "outputs_per_s": 0.3334894797775548,
+    "stages": {
+      "buffer_fill": {
+        "mean_ms": 2997.79124,
+        "std_ms": 3.5323433251029814,
+        "median_ms": 2998.01055,
+        "p95_ms": 3002.21987,
+        "min_ms": 2992.4379,
+        "max_ms": 3002.8604
+      },
+      "preprocessing": {
+        "mean_ms": 0.24091,
+        "std_ms": 0.044280796063304914,
+        "median_ms": 0.24530000000000002,
+        "p95_ms": 0.29703999999999997,
+        "min_ms": 0.1745,
+        "max_ms": 0.3145
+      },
+      "inference": {
+        "mean_ms": 0.50895,
+        "std_ms": 0.11711163264168081,
+        "median_ms": 0.4596,
+        "p95_ms": 0.687485,
+        "min_ms": 0.3838,
+        "max_ms": 0.695
+      },
+      "postprocessing": {
+        "mean_ms": 0.040249999999999994,
+        "std_ms": 0.008493085422860177,
+        "median_ms": 0.04015,
+        "p95_ms": 0.051469999999999995,
+        "min_ms": 0.0287,
+        "max_ms": 0.0539
+      },
+      "compute_pipeline": {
+        "mean_ms": 0.7930699999999999,
+        "std_ms": 0.1629164881158442,
+        "median_ms": 0.7413000000000001,
+        "p95_ms": 1.0341,
+        "min_ms": 0.5898,
+        "max_ms": 1.0602
+      },
+      "end_to_end": {
+        "mean_ms": 2998.5843099999997,
+        "std_ms": 3.4460895810904884,
+        "median_ms": 2998.7253,
+        "p95_ms": 3002.9295,
+        "min_ms": 2993.4352,
+        "max_ms": 3003.6252
+      }
+    },
+    "predictions": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "positive_probabilities": [
+      0.320812463760376,
+      0.27375566959381104,
+      0.28984060883522034,
+      0.22939342260360718,
+      0.2904907763004303,
+      0.2339419424533844,
+      0.32933884859085083,
+      0.31111058592796326,
+      0.23024818301200867,
+      0.5637255311012268
+    ],
+    "accuracy": 0.9
+  }
+}
