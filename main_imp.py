@@ -1,18 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-LOSO 版本（cross-subject, no attention）：
-- 按 subindex 做 leave-one-subject-out
-- 默认 11 个测试者
-- 使用 30 通道 EEG 输入: (N, 1, 30, 384)
-- 每个 LOSO fold 内，从训练被试中再划一个 validation subject
-- 用 validation subject 做：
-    1) best epoch 选择
-    2) best threshold 搜索
-- 输出并保存：
-  acc / pre / recall / f1 / spec / MFLOPs / latency / parameters
-- 所有日志保存到 checkpoint5/lososimple/loso_results.txt
-- 每个 fold 模型保存到 checkpoint5/lososimple/*.pth
-"""
+
 import os
 import time
 import copy
@@ -24,7 +10,7 @@ import torch.utils.data as Data
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from datetime import datetime
-from net_imp import FDNetCNN_CrossSubject
+from net_imp import MSStatsNet_CrossSubject
 
 
 torch.manual_seed(42)
